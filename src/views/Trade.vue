@@ -69,19 +69,6 @@ onMounted(async () => {
 });
 
 
-const buttonChang = ref('%CHG');
-
-const toggleSeachbutton = () => {
-    if (buttonChang.value == '%CHG') {
-        return buttonChang.value = 'CHG'
-    }
-    if (buttonChang.value == 'CHG') {
-        return buttonChang.value = 'PO'
-    }
-    if (buttonChang.value == 'PO') {
-        return buttonChang.value = '%CHG'
-    }
-};
 
 //lazy load
 const postBox = ref(0)
@@ -96,7 +83,6 @@ const calcPosOfBox = () => {
         // console.log("bottomPosition ==>", postBoxBottom.value)
     }
 }
-//lazy load end
 
 let stockSymbolGraph = ref('')
 

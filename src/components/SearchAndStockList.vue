@@ -140,21 +140,20 @@ onMounted(async () => {
     if (storedFavStockNumber) {
         stockStar.value = JSON.parse(storedFavStockNumber)
     }
-    onScrollStoptest(() => {
+    onScrollStop(() => {
         calcPosOfBox()
         findStockSymbol()
     });
 });
 
 
-const onScrollStoptest = (callback: () => void): void => {
+const onScrollStop = (callback: () => void): void => {
     let isScrolling: any;
     const element = document.getElementById("tablesearchFindStock");    
     if (element) {
         element.addEventListener(
             'scroll',
             (e: Event) => {
-                console.log("test scroll")
                 clearTimeout(isScrolling);
                 isScrolling = setTimeout(() => {
                     callback();
@@ -174,7 +173,6 @@ const fetchFindStockSymbol = ref<string[]>([])
 const calcPosOfBox = () => {
     if (tableScoll.value) {
         postBoxBottom.value = tableScoll.value.getBoundingClientRect().bottom
-        console.log("bottomPosition ==>", postBoxBottom.value)
     }
 }
 
@@ -200,7 +198,6 @@ const findStockSymbol = () => {
 
     const IndexTr = Number(dataTr.value)
     const datatestIndexTr = findStock.value.slice(IndexTr - 10, IndexTr + 1)
-    console.log("datatestIndexTr ==>", datatestIndexTr)
 
     for(const datafinded in datatestIndexTr){
         result.push(datatestIndexTr[datafinded].StockSymbol)
@@ -209,13 +206,11 @@ const findStockSymbol = () => {
 
     fetchFindStockSymbol.value = result
     fetchStockSymbol(fetchFindStockSymbol.value)
-    console.log("fetchFindStockSymbol ==>", fetchFindStockSymbol.value)
     localStorage.setItem("fetchFindStockSymbol", JSON.stringify(fetchFindStockSymbol.value))
 }
 
 const StockSymbol = ref<string[]>([])
 const fetchStockSymbol = async (Symbol: any) => {
-    console.log("Symbol API ==> ",Symbol)
     if(StockSymbol){
         await searchStockBySymbol(Symbol).then((res: any) => {
             console.log("res API ==> ",res)
@@ -319,12 +314,8 @@ const findStock = computed(() => {
             item.StockSymbol.toLowerCase().includes(searchQuery.value.toLowerCase())
         ));
     }
-    console.log("data ==> ", data)
+    // console.log("data ==> ", data)
     return data
 });
-
-const handle = (x: any) => {
-    console.log(x)
-}
 
 </script>

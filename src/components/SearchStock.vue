@@ -47,7 +47,7 @@ const findStock = computed(() => {
         // console.log("item ==>",item.StockSymbol.toLowerCase().includes(searchQuery.value.toLowerCase()))
         item.StockSymbol.toLowerCase().includes(searchQuery.value.toLowerCase())
     ));
-    console.log('filteredStocks ==>', filteredStocks)
+    // console.log('filteredStocks ==>', filteredStocks)
     emit('send-message', filteredStocks);
 
 })
