@@ -1,0 +1,149 @@
+<template>
+    <div class="h-full w-full border-0 relative text-sm px-3 pb-1 pt-2 flex">
+        <div class="md:w-[15%]">
+            <div class="grid grid-row-3 gap-1.5">
+                <div class="items-center grid grid-cols-2">
+                    <div class="font-tuffy">Avg</div>
+                    <div
+                        :class="changeColorText(stockInf?.Average, stockInf?.PriorClosePrice, stockInf?.Ceiling, stockInf?.Floor)">
+                        {{ stockInf?.Average }}</div>
+                </div>
+                <div class="items-center grid grid-cols-2">
+                    <div class="font-tuffy">Prev</div>
+                    <div
+                        :class="changeColorText(stockInf?.PriorClosePrice, stockInf?.PriorClosePrice, stockInf?.Ceiling, stockInf?.Floor)">
+                        {{ stockInf?.PriorClosePrice }}</div>
+                </div>
+                <div class="items-center grid grid-cols-2">
+                    <div class="font-tuffy">%CMPR</div>
+                    <div class="text-yellowPrev">{{ stockInf?.CmprPct }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="md:w-[26%] 2xl:w-[23%] md:pr-3">
+            <div class="grid grid-row-3 gap-1.5">
+                <div class="items-center grid grid-cols-2">
+                    <div class="font-tuffy">H/L 52 W</div>
+                    <div>
+                        <span
+                            :class="changeColorText(stockInf?.High52, stockInf?.PriorClosePrice, stockInf?.Ceiling, stockInf?.Floor)">{{
+                                stockInf?.High52 }}</span>
+                        <span>/</span>
+                        <span
+                            :class="changeColorText(stockInf?.Low52, stockInf?.PriorClosePrice, stockInf?.Ceiling, stockInf?.Floor)">{{
+                                stockInf?.Low52 }}</span>
+                    </div>
+                </div>
+                <div class="items-center grid grid-cols-2">
+                    <div class="font-tuffy">Ceiling/Floor</div>
+                    <div>
+                        <span
+                            :class="changeColorText(stockInf?.Ceiling, stockInf?.PriorClosePrice, stockInf?.Ceiling, stockInf?.Floor)">{{
+                                stockInf?.Ceiling }}</span>
+                        <span>/</span>
+                        <span
+                            :class="changeColorText(stockInf?.Floor, stockInf?.PriorClosePrice, stockInf?.Ceiling, stockInf?.Floor)">{{
+                                stockInf?.Floor }}</span>
+                    </div>
+                </div>
+                <div class="items-center grid grid-cols-2">
+                    <div class="font-tuffy">PrjClose/Vol</div>
+                    <div
+                        :class="changeColorText(stockInf?.ProjectedClose, stockInf?.PriorClosePrice, stockInf?.Ceiling, stockInf?.Floor)">
+                        {{ stockInf?.ProjectedClose }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-[20%] md:w-[15%]">
+            <div class="grid grid-row-3 gap-1.5">
+                <div class="items-center grid grid-cols-2">
+                    <div class="font-tuffy">High</div>
+                    <div
+                        :class="changeColorText(stockInf?.HighPrice, stockInf?.PriorClosePrice, stockInf?.Ceiling, stockInf?.Floor)">
+                        {{ stockInf?.HighPrice }}</div>
+                </div>
+                <div class="items-center grid grid-cols-2">
+                    <div class="font-tuffy">Low</div>
+                    <div
+                        :class="changeColorText(stockInf?.LowPrice, stockInf?.PriorClosePrice, stockInf?.Ceiling, stockInf?.Floor)">
+                        {{ stockInf?.LowPrice }}</div>
+                </div>
+                <div class="items-center grid grid-cols-2">
+                    <div class="font-tuffy">Value</div>
+                    <div>{{ stockInf?.TotalValue }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="w-[20%] md:w-[15%]">
+            <div class="grid grid-row-3 gap-1.5">
+                <div class="items-center grid grid-cols-2">
+                    <div class="font-tuffy">Open-1</div>
+                    <div
+                        :class="changeColorText(stockInf?.Open1, stockInf?.PriorClosePrice, stockInf?.Ceiling, stockInf?.Floor)">
+                        {{ stockInf?.Open1
+                        }}
+                    </div>
+                </div>
+                <div class="items-center grid grid-cols-2 ">
+                    <div>Open-2</div>
+                    <div
+                        :class="changeColorText(stockInf?.Open2, stockInf?.PriorClosePrice, stockInf?.Ceiling, stockInf?.Floor)">
+                        {{ stockInf?.Open2
+                        }}
+                    </div>
+                </div>
+                <div class="items-center grid grid-cols-2">
+                    <div>Volume</div>
+                    <div>{{ stockInf?.TotalVolume }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="w-[20%]">
+            <div class="grid grid-row-3 gap-1.5">
+                <div class="items-center grid grid-cols-2">
+                    <div>{{ messageMarketTextVol }}</div>
+                    <div class="flex text-[#fff]">
+                        <div class="pr-0.5">{{ stockInf?.OpenVolume }}</div>
+                        <div> {{ stockInf?.OpenVolumePct }} </div>
+                    </div>
+                </div>
+                <div class="items-center grid grid-cols-2">
+                    <div>Buy Vol</div>
+                    <div class="flex">
+                        <div class="pr-0.5 text-yellowPrev">{{ stockInf?.BuyVolume }}</div>
+                    </div>
+                </div>
+                <div class="items-center grid grid-cols-2">
+                    <div>Sell Vol</div>
+                    <div class="flex">
+                        <div class="pr-0.5 text-purpleFloor">{{ stockInf?.SellVolume }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script setup lang="ts">
+import type TStockInformation from "@/interfaces/TStockInformation";
+import { computed, type PropType } from "vue";
+import usechangeMarketText from '@/utils/ChangeTextVolMarket';
+import usechangeColorText from '@/utils/ChangeColorText';
+
+const {  messageMarketTextVol } = usechangeMarketText();
+const { changeColorText } = usechangeColorText();
+
+const props = defineProps({
+    stockInfo: {
+        type:  Object as PropType<TStockInformation>,
+        required: true,
+        default: {}
+    },
+});
+
+const stockInf = computed (()=>{
+    return props.stockInfo
+})
+
+</script>

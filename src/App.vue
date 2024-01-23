@@ -6,7 +6,7 @@ import Footer from "./components/Footer.vue";
 
 
 <template>
-  <div class="bg-black-555 h-screen">
+  <div class="bg-black-555">
     <Navbar/>
     <RouterView/>
     <Footer/>

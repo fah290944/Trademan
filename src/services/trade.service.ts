@@ -1,33 +1,21 @@
 import axios from "axios";
+import useloginUser from '@/utils/loginUser';
 // import useTest from '@/utils/test';
 
 export default function TradeService() {
+  const {getdataUserAuthen } = useloginUser();
 // const { setStock } = useTest();
-  const authenKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiI5OC10aGFuc2lyaSIsIlNlc3Npb25JZCI6IjMiLCJWZXJpZnkyRkEiOnRydWUsIklzMVRpbWVUb2tlbiI6IkZhbHNlIiwibmJmIjoxNzA1MDI0MTYwLCJleHAiOjE3MDUxMTA1NjAsImlhdCI6MTcwNTAyNDE2MH0.cIA6GSDWwHnRH64kZtHB7gdl5cEfAhMu8UTMLnG-a5c'
 
-  const searchStockBySymbol = async () => {
+  const searchStockBySymbol = async (stocksymbol: any) => {
     var data = {
       WebMethod: "searchstockbysymbol",
       Data: {
         SortBy: "",
-        SymbolList: [
-          "1DIV",
-          "24CS",
-          "24CS-F",
-          "2S",
-          "2S-F",
-          "3K-BAT",
-          "7UP",
-          "7UP-F",
-          "A",
-          "A5",
-          "A5-F",
-          "AAI",
-        ],
+        SymbolList: stocksymbol,
         ViewType: "",
       },
       AuthenKey:
-        authenKey,
+        getdataUserAuthen(),
     };
     let apiUrl =
       "https://demotrade.efintradeplus.com/efinTrade.TradeManAPI.DEV/api/webtrade/WebTradeRequest";
@@ -45,7 +33,7 @@ export default function TradeService() {
       WebMethod: "loadallinformation",
       Data: "",
       AuthenKey:
-        authenKey,
+        getdataUserAuthen(),
     };
     let apiUrl =
       "https://demotrade.efintradeplus.com/efinTrade.TradeManAPI.DEV/api/webtrade/WebTradeRequest";
@@ -59,22 +47,43 @@ export default function TradeService() {
     }
   };
 
-  const stockInformation = async () => {
+  const stockInformationNumber = async (stocknumber: any) => {
     var data = {
       WebMethod: "loadstockinformation",
       Data: {
-          "StockNumber": "65626",
+          "StockNumber": stocknumber,
           "TickerRow": 5
       },
       AuthenKey:
-        authenKey,
+        getdataUserAuthen(),
     };
     let apiUrl =
       "https://demotrade.efintradeplus.com/efinTrade.TradeManAPI.DEV/api/webtrade/WebTradeRequest";
 
     try {
       const res = await axios.post(apiUrl, data);
-      //console.log( res.data);
+      return res.data
+    } catch (error: any) {
+      console.log("Request failed ==>", error);
+    }
+  };
+
+  const stockInformation = async () => {
+    const StockNumber = localStorage.getItem('storedStockNumber')
+    var data = {
+      WebMethod: "loadstockinformation",
+      Data: {
+          "StockNumber": StockNumber ?? '66061',
+          "TickerRow": 5
+      },
+      AuthenKey:
+        getdataUserAuthen(),
+    };
+    let apiUrl =
+      "https://demotrade.efintradeplus.com/efinTrade.TradeManAPI.DEV/api/webtrade/WebTradeRequest";
+
+    try {
+      const res = await axios.post(apiUrl, data);
       return res.data;
     } catch (error: any) {
       console.log("Request failed ==>", error);
@@ -85,11 +94,11 @@ export default function TradeService() {
     var data = {
       WebMethod: "loadstockinformation",
       Data: {
-          "StockNumber": "65626",
+          "StockNumber": "66061",
           "TickerRow": 5
       },
       AuthenKey:
-        authenKey,
+        getdataUserAuthen(),
     };
     let apiUrl =
       "https://demotrade.efintradeplus.com/efinTrade.TradeManAPI.DEV/api/webtrade/WebTradeRequest";
@@ -107,5 +116,7 @@ export default function TradeService() {
     searchStock,
     allInformation,
     stockInformation,
+    stockInformationNumber,
+
   };
 }

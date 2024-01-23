@@ -17,11 +17,6 @@ const router = createRouter({
       name: 'trade',
       component: Trade
     },
-    {
-      path: '/tt',
-      name: 'tt',
-      component: SearchStockVue
-    },
     // {
     //   path: '/about',
     //   name: 'about',

@@ -24,6 +24,7 @@ export default {
         'darkbluebgBar' : '#FA6B82',
         'blueCeiling' : '#558BED',
         'purpleFloor' : '#D964D7',
+        'bluetextfooter' : '#558BED'
 
         
       },

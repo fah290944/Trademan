@@ -16,7 +16,8 @@
                 </svg>
                 <input
                     class="w-[100%] pl-[0.5rem] m-0 outline-none text-sm font-bold placeholder-navbarIconBlack dark:text-white text-black rounded bg-[#2A2D35]"
-                    v-model="searchQuery" @input="() => findStock" placeholder="Search..." type="text" />
+                    v-model="searchQuery" type="text" placeholder="Search..."
+                    @input="searchQuery = searchQuery.toUpperCase()" />
             </form>
         </div>
     </div>
@@ -26,14 +27,14 @@
 import { computed, ref, type PropType } from "vue";
 
 const props = defineProps({
-  dataAll: {
-    type: Array as PropType<Array<{ StockSymbol: string; StockFullName: string }>>,
-    required: true,
-  },
-  dataStock: {
-    type: Array as PropType<Array<{ StockSymbol: string; StockFullName: string }>>,
-    required: true,
-  },
+    dataAll: {
+        type: Array as PropType<Array<{ StockSymbol: string; StockFullName: string }>>,
+        required: true,
+    },
+    dataStock: {
+        type: Array as PropType<Array<{ StockSymbol: string; StockFullName: string }>>,
+        required: true,
+    },
 });
 
 const emit = defineEmits(['send-message'])

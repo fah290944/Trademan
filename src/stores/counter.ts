@@ -1,19 +1,18 @@
-// import { ref, computed } from 'vue'
-// import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+import { defineStore } from 'pinia'
 
-// export const useCounterStore = defineStore('counter', () => {
-//   const bidOffer = ref<T>(0);
+export const useCounterStore = defineStore('stockInfo', () => {
+  const searchData = ref<any[]>([]);
+  const stockInfo = ref<any[]>([]);
 
-//   const stockInfo = ref(0);
 
-//   const doubleCount = computed(() => bidOffer.value * 2);
-//   const doubleCount2 = computed(() => stockInfo.value * 2);
+  const dataStock = computed(() => stockInfo.value);
 
-//   const increment = (x:any) => {
-//     bidOffer.value = x.bidOffer;
-//     stockInfo.value = x.StockInfo
+  const setAllInformation = (data:any) => {
+    searchData.value = data.StockInformation;
+    stockInfo.value = data.StockInformation;
 
-//   }
+  }
 
-//   return { doubleCount, increment }
-// })
+  return { dataStock, setAllInformation }
+})

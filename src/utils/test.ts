@@ -1,19 +1,33 @@
-// import { useCounterStore } from '@/stores/counter';
+import TradeService from '@/services/trade.service';
+import { useCounterStore } from '@/stores/counter';
 
-// export default function () {
+export default function () {
 
-//    const store = useCounterStore();
+    const {allInformation} = TradeService();
 
-//    const setStock = (x:any) => {
-//     store.increment(x);
-//    }
-//    const getStock = () => {
-//     return store.doubleCount;
-//    }
+    const getinit = async () => {
+        await allInformation().then((res: any) => {
+            // console.log("res.StockInformation ==>", res.StockInformation)
+            setStock(res)
+            // searchData.value = res.StockInformation
+            // stockData.value = res.StockInformation
+        }).catch((e: any) => { console.log("e==>", e) })
+    };
 
-//     return{
-//         setStock,
-//         getStock,
-//     }
+   const store = useCounterStore();
 
-// };
+   const setStock = (data:any) => {
+    store.setAllInformation(data);
+   }
+
+   const getStockData = () => {
+    return store.dataStock;
+   }
+
+    return{
+        setStock,
+        getStockData,
+        getinit,
+    }
+
+};

@@ -1,7 +1,8 @@
 export default function () {
 
-    const changeColorText = (price: String ="", prev: String, ceiling: String,  floor: String) => {
-
+    const changeColorText = (price: String ="", prev: String = "", ceiling: String = "",  floor: String = "") => {
+      
+      if(price !== ''){
         if (price === '0.00' ) {
             return 'text-[#F2BA40]'; // สีเหลือง
           } else if (price === ceiling) {
@@ -17,6 +18,7 @@ export default function () {
           } else {
             return 'text-[#fff]'; // กรณีอื่นๆ สีดำหรือค่าที่ต้องการ
           }
+      }
     };
 
     return{
