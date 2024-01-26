@@ -115,7 +115,7 @@
 import TradeService from "@/services/trade.service";
 import usechangeColorText from '@/utils/ChangeColorText';
 import { computed, onMounted, onUnmounted, ref, type ComputedRef, type PropType } from "vue";
-import useTest from '@/utils/test';
+import useTest from '@/utils/stockAllInformation';
 
 const { searchStockBySymbol } = TradeService();
 const { changeColorText } = usechangeColorText();
@@ -300,6 +300,7 @@ const toggleStartest = (stockNumber: any) => {
     localStorage.setItem('storedFavStockNumber', JSON.stringify(data))
 }
 
+
 const findStock = computed(() => {
     const data = getStockData()
     if (showOnlyFav.value) {
@@ -319,3 +320,4 @@ const findStock = computed(() => {
 });
 
 </script>
+@/utils/stockInformation@/utils/stockAllInformation

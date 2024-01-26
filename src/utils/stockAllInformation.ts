@@ -1,5 +1,5 @@
 import TradeService from '@/services/trade.service';
-import { useCounterStore } from '@/stores/counter';
+import { useCounterStore } from '@/stores/StockAllInformation';
 
 export default function () {
 
@@ -7,10 +7,7 @@ export default function () {
 
     const getinit = async () => {
         await allInformation().then((res: any) => {
-            // console.log("res.StockInformation ==>", res.StockInformation)
             setStock(res)
-            // searchData.value = res.StockInformation
-            // stockData.value = res.StockInformation
         }).catch((e: any) => { console.log("e==>", e) })
     };
 

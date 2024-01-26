@@ -6,8 +6,8 @@ import usechangeMarketText from '@/utils/ChangeTextVolMarket';
 import usechangeArrowAtBar from '@/utils/ChangeArrowAtBar';
 import TradeService from '@/services/trade.service';
 import LoginService from '@/services/login.service';
-import useTest from '@/utils/test';
-import useloginUser from '@/utils/loginUser';
+import useTest from '@/utils/stockAllInformation';
+import useLoginUser from '@/utils/loginUser';
 import type TBidOfferInfor from "@/interfaces/TBidsOffers";
 import type TStockInformation from "@/interfaces/TStockInformation";
 import StockName from "@/components/StockName.vue"
@@ -17,78 +17,57 @@ import BestBidsOffres from "@/components/BestBidsOffres.vue";
 import SearchAndStockList from "@/components/SearchAndStockList.vue";
 import type TBid from "@/interfaces/TBid";
 import type TOffer from "@/interfaces/TOffer";
+// import { io, Socket } from 'socket.io-client';
+// import { ws } from "@/socket"
 
-const { changeColorText } = usechangeColorText();
-const { changeColorBar } = usechangeColorBar();
-const { changeArrowAtBar } = usechangeArrowAtBar();
-const { changeMarketText, messageMarketTextVol } = usechangeMarketText();
-const { searchStockBySymbol, searchStock, allInformation, stockInformation, stockInformationNumber, } = TradeService();
+
+
+
+const { stockInformation, stockInformationNumber, } = TradeService();
 const { userAuthen } = LoginService();
 const nowt = new Date();
 const nowte = nowt.getMinutes();
-
-const { getStockData, getinit } = useTest();
-const { setDataAuthenUser } = useloginUser();
-const stockData = ref<any[]>([]);
+const { getinit } = useTest();
+const { setDataAuthenUser, getUserLogin } = useLoginUser();
 const stockInf = ref<TStockInformation>();
 const marketTrade = ref<any[]>([]);
 const bidOffer = ref<TBidOfferInfor>();
 
 
 const getinitreal = async () => {
-    await userAuthen().then((res: any) => {
-        setDataAuthenUser(res.AuthenInfo.AuthenKey)
-        // console.log("res AuthenInfo test ==>", res)
-        // console.log("res AuthenInfo ==>", res.AuthenInfo.AuthenKey)
-    }).catch((e: any) => { console.log("e==>", e) })
-    // await allInformation().then((res: any) => {
-    //     //setStock(res)
-    //     console.log("res.StockInformation ==>", res.StockInformation)
-    //     searchData.value = res.StockInformation
-    //     stockData.value = res.StockInformation
-    // }).catch((e: any) => { console.log("e==>", e) })
     await stockInformation().then((res: any) => {
-        // console.log("res.stockInformation  ==>", res)
+        console.log("res.stockInformation  ==>", res)
         stockInf.value = res.StockInfo
-        // console.log(' stockInf.value 1 ==>', stockInf.value)
         marketTrade.value = res.Lastsale
         bidOffer.value = res.BestBidOffer
     }).catch((e: any) => { console.log("e==>", e) })
     chanageFormatBidOffer(bidOffer.value);
-    calcPosOfBox()
+    // ws()
+    // setTimeout(() => {
+    //     ws().disconnect()
+    // }, 5000);
+
+
 };
 
-
 onMounted(async () => {
+    await getUserLogin();
     await getinitreal();
     await getinit();
+
     const storedGraphTrade = localStorage.getItem('storedStockSymbolGraph')
     if (storedGraphTrade) {
         stockSymbolGraph.value = storedGraphTrade
+    } else {
+        stockSymbolGraph.value = "1DIV"
     }
 });
-
-
-
-//lazy load
-const postBox = ref(0)
-const postBoxBottom = ref(0)
-const tableScoll = ref<HTMLElement>();
-
-const calcPosOfBox = () => {
-    if (tableScoll.value) {
-        postBox.value = tableScoll.value.getBoundingClientRect().top
-        postBoxBottom.value = tableScoll.value.getBoundingClientRect().bottom
-        // console.log("topPosition ==>", postBox.value)
-        // console.log("bottomPosition ==>", postBoxBottom.value)
-    }
-}
 
 let stockSymbolGraph = ref('')
 
 const fetchStockNumber = async (stockNumber: string, StockSymbol: string) => {
     stockSymbolGraph.value = StockSymbol
-    if(stockNumber !== undefined){
+    if (stockNumber !== undefined) {
         localStorage.setItem('storedStockSymbolGraph', StockSymbol)
         localStorage.setItem('storedStockNumber', stockNumber)
         await stockInformationNumber(stockNumber).then((res: any) => {
@@ -106,7 +85,6 @@ const fetchStockNumber = async (stockNumber: string, StockSymbol: string) => {
 //     console.log('b:', prev);
 //     // console.log('c:', c);
 // });
-
 
 
 const Infooff = ref<TOffer[]>([]);
@@ -158,7 +136,6 @@ const chanageFormatBidOffer = (bidOffer: any) => {
     Infobid.value = resultsBid
     // console.log('Infooff.value ==>', Infooff.value)
     // console.log('Infobid.value ==>', Infobid.value)
-
 };
 
 </script>
@@ -168,23 +145,22 @@ const chanageFormatBidOffer = (bidOffer: any) => {
         <div class="grid grid-cols-12 h-full auto-rows-min">
             <div
                 class="bg-transparent col-start-1 col-end-4 row-start-1 row-end-2 border-b border-r border-l dark:border-borderGray dark:border-opacity-25 border-opacity-25">
-                <StockName :stockInfo="stockInf"/>
+                <StockName :stockInfo="stockInf" />
             </div>
             <div
                 class="bg-transparent col-start-4 col-end-13 row-start-1 row-end-2 border-b border-r border-l dark:border-borderGray dark:border-opacity-25 border-opacity-25">
-                <StockDetail :stockInfo="stockInf"/>
+                <StockDetail :stockInfo="stockInf" />
             </div>
             <div
                 class="bg-transparent col-start-1 col-end-4 row-start-2 row-end-5 border-b border-r border-l dark:border-borderGray dark:border-opacity-25 border-opacity-25">
-                <BestBidsOffres :stockInfo="stockInf" :marketTradepages="marketTrade" :Infobids="Infobid" :Infooffs="Infooff" />
+                <BestBidsOffres :stockInfo="stockInf" :marketTradepages="marketTrade" :Infobids="Infobid"
+                    :Infooffs="Infooff" />
             </div>
             <div
                 class="bg-transparent col-start-4 col-end-10 row-start-2 row-span-3 border-b border-r border-l dark:border-borderGray dark:border-opacity-25 border-opacity-25">
-                <iframe 
-                    v-if="stockSymbolGraph"
+                <iframe v-if="stockSymbolGraph"
                     :src="`https://demo.efinancethai.com/html5/controls/stockchart_trade/chartSTI.asp?userid=98-thansiri&symbol=${stockSymbolGraph ?? '1DIV'}&hidesearch=Y&rgb=20,20,20&tp=0&support_new_design=true`"
-                    title="Graph Trade index" width="100%" height="100%"
-                    >
+                    title="Graph Trade index" width="100%" height="100%">
                 </iframe>
             </div>
             <div
@@ -219,4 +195,4 @@ const chanageFormatBidOffer = (bidOffer: any) => {
 ::-webkit-scrollbar-thumb:hover {
     background: #555555;
 }
-</style>
+</style>@/utils/stockInformation@/utils/stockAllInformation

@@ -29,7 +29,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div :class="changeColorBar(stockInf?.PriorClosePrice, stockInf?.PriorClosePrice)"
+                <div :class="changeColorBar(stockInf?.LastSalePrice, stockInf?.PriorClosePrice)"
                     class="px-2.5 py-2 pl-5 flex cursor-pointer mx-2.5 h-[40px]">
                     <span class="pr-3" v-html="changeArrowAtBar(stockInf?.PriorClosePrice,marketTrade)">
                     </span>
