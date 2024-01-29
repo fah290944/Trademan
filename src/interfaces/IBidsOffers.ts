@@ -1,4 +1,4 @@
-export default interface TBidOfferInfor {
+export default interface IBidOfferInfor {
     BidPrice1: string,
     BidVolume1: string,
     BidTotal1: string,

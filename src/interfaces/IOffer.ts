@@ -1,4 +1,4 @@
-export default interface TOffer {
+export default interface IOffer {
     OfferPrice: string;
     OfferVolume: string;
     OfferTotal: string;

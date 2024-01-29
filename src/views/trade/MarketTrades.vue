@@ -40,7 +40,7 @@
                                         <span v-else-if="item.Side == ''" class="text-[#fff]">{{ item.Side }}</span>
                                     </div>
                                     <div
-                                        class="flex gap-1 justify-end text-xs xl:text-sm text-right font-tuffy py-1.5 w-[25%] dark:text-priceYellow text-primaryYellow-200">
+                                        class="flex gap-1 justify-end text-xs xl:text-sm text-right font-tuffy py-1.5 w-[25%] mr-3 dark:text-priceYellow text-primaryYellow-200">
                                         <span v-if="item.Side == 'S'" class="text-[#D964D7]">{{ item.Volume }}</span>
                                         <span v-else-if="item.Side == 'B'" class="text-[#F2BA40]">{{ item.Volume }}</span>
                                         <span v-else-if="item.Side == ''" class="text-[#fff]">{{ item.Volume }}</span>
