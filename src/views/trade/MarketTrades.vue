@@ -30,23 +30,23 @@
                                 <div v-for="item, index in marketTrade" :key="index"
                                     class="border-0 flex justify-between select-none hover:dark:bg-darkGray hover:bg-headerGray">
                                     <div :class="changeColorText(item.Price, stockInf?.PriorClosePrice, stockInf?.Ceiling, stockInf?.Floor)"
-                                        class="text-xs xl:text-sm py-1.5 w-1/4 pl-3 font-tuffy">
+                                        class="text-xs xl:text-sm py-1.5 w-[25%]  pl-3 font-tuffy">
                                         {{ item.Price }}
                                     </div>
                                     <div
-                                        class="flex gap-1 justify-center text-xs xl:text-sm text-center font-tuffy py-1.5 w-[80px] dark:text-priceYellow text-primaryYellow-200">
+                                        class="flex gap-1 justify-center text-xs xl:text-sm text-center font-tuffy py-1.5 w-[25%] dark:text-priceYellow text-primaryYellow-200">
                                         <span v-if="item.Side == 'S'" class="text-[#D964D7]">{{ item.Side }}</span>
                                         <span v-else-if="item.Side == 'B'" class="text-[#F2BA40]">{{ item.Side }}</span>
                                         <span v-else-if="item.Side == ''" class="text-[#fff]">{{ item.Side }}</span>
                                     </div>
                                     <div
-                                        class="flex gap-1 justify-end text-xs xl:text-sm text-right font-tuffy py-1.5 pr-3 w-1/4 dark:text-priceYellow text-primaryYellow-200">
+                                        class="flex gap-1 justify-end text-xs xl:text-sm text-right font-tuffy py-1.5 w-[25%] dark:text-priceYellow text-primaryYellow-200">
                                         <span v-if="item.Side == 'S'" class="text-[#D964D7]">{{ item.Volume }}</span>
                                         <span v-else-if="item.Side == 'B'" class="text-[#F2BA40]">{{ item.Volume }}</span>
                                         <span v-else-if="item.Side == ''" class="text-[#fff]">{{ item.Volume }}</span>
                                     </div>
                                     <div :class="changeColorText(item.Price, stockInf?.PriorClosePrice, stockInf?.Ceiling, stockInf?.Floor)"
-                                        class="flex gap-1 justify-end text-xs xl:text-sm text-right py-1.5 w-1/4 pr-3 dark:text-primaryRed text-darkRedTxt font-tuffy">
+                                        class="flex gap-1 justify-end text-xs xl:text-sm text-right py-1.5 w-[25%] ml-[5px] pr-3 dark:text-primaryRed text-darkRedTxt font-tuffy">
                                         {{ item.TimeStamp }}</div>
                                 </div>
                             </div>
