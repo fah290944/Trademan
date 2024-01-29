@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import type TStockInformation from '@/interfaces/TStockInformation';
-import type TBidOfferInfor from '@/interfaces/TBidsOffers';
+import type TStockInformation from '@/interfaces/IStockInformation';
+import type TBidOfferInfor from '@/interfaces/IBidsOffers';
 
 export const useCounterStore = defineStore('stockInfo', () => {
     const stockInf = ref<TStockInformation>();

@@ -1,9 +1,8 @@
 export default function () {
 
-const changeArrowAtBar = (prev: string = "",mark: any = '') => {
-    const data = mark
+const changeArrowAtBar = (prev: string = "",market: any = '') => {
+    const data = market
     let iconArrow = ''
-    // console.log("data arrow =>",data)
     if (data?.length > 0) {
         for (let i = 0; i < data.length; i++) {
             let j = i + 1

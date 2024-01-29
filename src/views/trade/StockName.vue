@@ -15,25 +15,13 @@
                 <div class="text-headerTextLightGray text-[11px] font-light mt-1.5">
                     {{ stockInf?.StockFullName }} </div>
                 <div class="text-sm font-tuffy flex font-bold mt-1 dark:text-priceYellow text-primaryYellow-200 font-tuffy">
-                    <div :class="stockInf?.ChangePrice?.startsWith('-') ? 'text-[#FA6B82]' : ''"
-                        v-if="stockInf?.ChangePrice?.startsWith('-')" class="pr-1">
+                    <div :class="changeColorCHG(stockInf?.ChangePrice)"
+                        class="pr-1">
                         {{ stockInf?.ChangePrice }}</div>
-                    <div :class="stockInf?.ChangePrice === '0.00' ? 'text-[#F2BA40]' : ''"
-                        v-else-if="stockInf?.ChangePrice === '0.00'" class="pr-1">
-                        {{ stockInf?.ChangePrice }}</div>
-                    <div :class="Number(stockInf?.ChangePrice) > 0 ? 'text-[#01C233]' : ''"
-                        v-else-if="Number(stockInf?.ChangePrice) > 0" class="pr-1">
-                        +{{ stockInf?.ChangePrice }}</div>
 
-                    <div :class="stockInf?.ChangePricePct?.startsWith('-') ? 'text-[#FA6B82]' : ''"
-                        v-if="stockInf?.ChangePricePct?.startsWith('-')" class="pr-1">
+                    <div :class="changeColorCHG(stockInf?.ChangePrice)"
+                        class="pr-1">
                         {{ stockInf?.ChangePricePct }}%</div>
-                    <div :class="stockInf?.ChangePricePct === '0.00' ? 'text-[#F2BA40]' : ''"
-                        v-else-if="stockInf?.ChangePricePct === '0.00'" class="pr-1">
-                        {{ stockInf?.ChangePricePct }}%</div>
-                    <div :class="Number(stockInf?.ChangePricePct) > 0 ? 'text-[#01C233]' : ''"
-                        v-else-if="Number(stockInf?.ChangePricePct) > 0" class="pr-1">
-                        +{{ stockInf?.ChangePricePct }}%</div>
                 </div>
             </div>
             <div class="flex justify-between w-full items-center">
@@ -44,15 +32,17 @@
 
 <script setup lang="ts">
 import { computed, onMounted, type PropType } from 'vue';
-import type TStockInformation from "@/interfaces/TStockInformation";
+import type IStockInformation from "@/interfaces/IStockInformation";
 import usechangeColorText from '@/utils/ChangeColorText';
+import usechangeColorCHG from '@/utils/ChangeColorCHG'
 
 const { changeColorText } = usechangeColorText();
+const { changeColorCHG } = usechangeColorCHG();
 
 
 const props = defineProps({
     stockInfo: {
-        type:  Object as PropType<TStockInformation>,
+        type:  Object as PropType<IStockInformation>,
         required: true,
         default: {}
     },

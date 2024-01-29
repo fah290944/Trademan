@@ -13,7 +13,7 @@
                 <div class="table-bit w-full pb-1 min-h-[318px] flex">
                     <table class="w-100 h-100 border-0 mt-auto">
                         <tbody class="h-100">
-                            <tr v-for="item, index in Infooff" :key="index"
+                            <tr v-for="item, index in  props.infoOffs" :key="index"
                                 class="bg-transparent hover:bg-[#5F6672]/10 h-[33px]">
                                 <td v-if="item.OfferPrice"
                                     :class="changeColorText(item.OfferPrice, stockInf?.PriorClosePrice, stockInf?.Ceiling, stockInf?.Floor)"
@@ -41,7 +41,7 @@
                 <div class="table-offer w-full pt-1 pb-[30px] ">
                     <table class="w-100 border-0">
                         <tbody>
-                            <tr v-for="item, index in Infobid" :key="index"
+                            <tr v-for="item, index in props.infoBids" :key="index"
                                 class="border-0 cursor-pointer select-none bg-transparent hover:bg-[#5F6672]/10">
                                 <td v-if="item.BidPrice"
                                     :class="changeColorText(item.BidPrice, stockInf?.PriorClosePrice, stockInf?.Ceiling, stockInf?.Floor)"
@@ -90,10 +90,8 @@
 </template>
 
 <script setup lang="ts">
-import type TbidofferInfor from '@/interfaces/TBidsOffers';
-import type TStockInformation from '@/interfaces/TStockInformation';
-import ChangeColorBar from '@/utils/ChangeColorBar';
-import { computed, onMounted, ref, watch, type PropType } from 'vue';
+import type IStockInformation from '@/interfaces/IStockInformation';
+import { computed, ref, type PropType } from 'vue';
 import usechangeColorText from '@/utils/ChangeColorText';
 import usechangeColorBar from '@/utils/ChangeColorBar';
 import usechangeArrowAtBar from '@/utils/ChangeArrowAtBar';
@@ -104,7 +102,7 @@ const { changeColorBar } = usechangeColorBar();
 
 const props = defineProps({
     stockInfo: {
-        type: Object as PropType<TStockInformation>,
+        type: Object as PropType<IStockInformation>,
         required: true,
         default: {}
     },
@@ -112,12 +110,12 @@ const props = defineProps({
         type: Array as PropType<Array<any>>,
         required: true,
     },
-    Infobids: {
+    infoBids: {
         type: Array as PropType<Array<any>>,
         required: true,
         default: {}
     },
-    Infooffs: {
+    infoOffs: {
         type: Array as PropType<Array<any>>,
         required: true,
         default: {}
@@ -130,15 +128,8 @@ const stockInf = computed (()=>{
 const marketTrade = computed (()=>{
     return props.marketTradepages
 })
-const Infobid = computed (()=>{
-    return props.Infobids
-})
-const Infooff = computed (()=>{
-    return props.Infooffs
-})
 
 let isClickbuttonBidOffer = ref(0)
-
 const toggleClickbuttonBidOffer = (buttonNumber: number) => {
     if (buttonNumber == 0) {
         isClickbuttonBidOffer.value = 0

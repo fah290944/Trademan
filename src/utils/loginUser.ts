@@ -21,19 +21,19 @@ export default function () {
    }
 
    //เพิ่มฟังก์ชันอื่นๆ
-   const getdataSocket = () => {
+   const getDataSocket = () => {
     return store.socketUser;
    }
 
-   const getdataUserAuthen = () => {
+   const getDataUserAuthen = () => {
     return store.authenUser;
    }
 
     return{
         setDataAuthenUser,
-        getdataUserAuthen,
+        getDataUserAuthen,
         getUserLogin,
-        getdataSocket,
+        getDataSocket,
 
     }
 

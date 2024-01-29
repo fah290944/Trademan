@@ -1,9 +1,9 @@
 
 import { io } from "socket.io-client";
-import useloginUser from '@/utils/loginUser';
+import useLoginUser from '@/utils/LoginUser';
 import useUserAuthenStore from "@/stores/login";
 
-const {getdataSocket } = useloginUser();
+const {getdataSocket } = useLoginUser();
 
 
 // "undefined" means the URL will be computed from the `window.location` object

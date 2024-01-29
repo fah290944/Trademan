@@ -26,10 +26,11 @@
                     <div class="font-tuffy">H/L 52 W</div>
                     <div>
                         <span
+                            class="pr-[3px]"
                             :class="changeColorText(stockInf?.High52, stockInf?.PriorClosePrice, stockInf?.Ceiling, stockInf?.Floor)">{{
                                 stockInf?.High52 }}</span>
-                        <span>/</span>
-                        <span
+                        <span v-if="stockInf?.High52 && stockInf?.Low52">/</span>
+                        <span class="pl-[3px]"
                             :class="changeColorText(stockInf?.Low52, stockInf?.PriorClosePrice, stockInf?.Ceiling, stockInf?.Floor)">{{
                                 stockInf?.Low52 }}</span>
                     </div>
@@ -38,10 +39,12 @@
                     <div class="font-tuffy">Ceiling/Floor</div>
                     <div>
                         <span
+                            class="pr-[3px]"
                             :class="changeColorText(stockInf?.Ceiling, stockInf?.PriorClosePrice, stockInf?.Ceiling, stockInf?.Floor)">{{
                                 stockInf?.Ceiling }}</span>
-                        <span>/</span>
+                        <span v-if="stockInf?.Ceiling && stockInf?.Floor">/</span>
                         <span
+                            class="pl-[3px]"
                             :class="changeColorText(stockInf?.Floor, stockInf?.PriorClosePrice, stockInf?.Ceiling, stockInf?.Floor)">{{
                                 stockInf?.Floor }}</span>
                     </div>
@@ -102,7 +105,7 @@
         <div class="w-[20%]">
             <div class="grid grid-row-3 gap-1.5">
                 <div class="items-center grid grid-cols-2">
-                    <div>{{ messageMarketTextVol }}</div>
+                    <div>Open Vol</div>
                     <div class="flex text-[#fff]">
                         <div class="pr-0.5">{{ stockInf?.OpenVolume }}</div>
                         <div> {{ stockInf?.OpenVolumePct }} </div>
@@ -126,7 +129,7 @@
 </template>
 
 <script setup lang="ts">
-import type TStockInformation from "@/interfaces/TStockInformation";
+import type IStockInformation from "@/interfaces/IStockInformation";
 import { computed, type PropType } from "vue";
 import usechangeMarketText from '@/utils/ChangeTextVolMarket';
 import usechangeColorText from '@/utils/ChangeColorText';
@@ -136,7 +139,7 @@ const { changeColorText } = usechangeColorText();
 
 const props = defineProps({
     stockInfo: {
-        type:  Object as PropType<TStockInformation>,
+        type:  Object as PropType<IStockInformation>,
         required: true,
         default: {}
     },

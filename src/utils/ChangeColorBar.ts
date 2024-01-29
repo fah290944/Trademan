@@ -10,12 +10,6 @@ export default function () {
         else if(price > prev){
             return 'bg-darkGreenbgBar'
         }
-        // else if(x < prev){
-        //     return 'text-redSell'
-        // }
-        // else if(x < prev){
-        //     return 'text-redSell'
-        // }
         else{
             return 'bg-darkBar'
         }

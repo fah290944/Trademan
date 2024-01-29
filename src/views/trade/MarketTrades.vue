@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import type TStockInformation from '@/interfaces/TStockInformation';
+import type IStockInformation from '@/interfaces/IStockInformation';
 import { computed, type PropType } from 'vue';
 import usechangeColorText from '@/utils/ChangeColorText';
 
@@ -64,7 +64,7 @@ const { changeColorText } = usechangeColorText();
 
 const props = defineProps({
     stockInfo: {
-        type: Object as PropType<TStockInformation>,
+        type: Object as PropType<IStockInformation>,
         required: true,
         default: {}
     },

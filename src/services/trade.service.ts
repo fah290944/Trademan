@@ -1,10 +1,12 @@
 import axios from "axios";
-import useloginUser from '@/utils/loginUser';
+import useLoginUser from '@/utils/LoginUser';
 // import useTest from '@/utils/test';
 
 export default function TradeService() {
-  const {getdataUserAuthen } = useloginUser();
+  const {getDataUserAuthen } = useLoginUser();
 // const { setStock } = useTest();
+// let apiUrl =
+//       "https://demotrade.efintradeplus.com/efinTrade.TradeManAPI.DEV/api/webtrade/WebTradeRequest";
 
   const searchStockBySymbol = async (stocksymbol: any) => {
     var data = {
@@ -15,11 +17,11 @@ export default function TradeService() {
         ViewType: "",
       },
       AuthenKey:
-        getdataUserAuthen(),
+        getDataUserAuthen(),
     };
     let apiUrl =
       "https://demotrade.efintradeplus.com/efinTrade.TradeManAPI.DEV/api/webtrade/WebTradeRequest";
-
+  
     try {
       const res = await axios.post(apiUrl, data);
       return res.data;
@@ -33,7 +35,7 @@ export default function TradeService() {
       WebMethod: "loadallinformation",
       Data: "",
       AuthenKey:
-        getdataUserAuthen(),
+        getDataUserAuthen(),
     };
     let apiUrl =
       "https://demotrade.efintradeplus.com/efinTrade.TradeManAPI.DEV/api/webtrade/WebTradeRequest";
@@ -55,7 +57,7 @@ export default function TradeService() {
           "TickerRow": 5
       },
       AuthenKey:
-        getdataUserAuthen(),
+        getDataUserAuthen(),
     };
     let apiUrl =
       "https://demotrade.efintradeplus.com/efinTrade.TradeManAPI.DEV/api/webtrade/WebTradeRequest";
@@ -77,7 +79,7 @@ export default function TradeService() {
           "TickerRow": 5
       },
       AuthenKey:
-        getdataUserAuthen(),
+        getDataUserAuthen(),
     };
     let apiUrl =
       "https://demotrade.efintradeplus.com/efinTrade.TradeManAPI.DEV/api/webtrade/WebTradeRequest";
@@ -98,8 +100,9 @@ export default function TradeService() {
           "TickerRow": 5
       },
       AuthenKey:
-        getdataUserAuthen(),
+        getDataUserAuthen(),
     };
+
     let apiUrl =
       "https://demotrade.efintradeplus.com/efinTrade.TradeManAPI.DEV/api/webtrade/WebTradeRequest";
 

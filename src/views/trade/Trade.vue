@@ -1,22 +1,18 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
-import usechangeColorText from '@/utils/ChangeColorText';
-import usechangeColorBar from '@/utils/ChangeColorBar';
-import usechangeMarketText from '@/utils/ChangeTextVolMarket';
-import usechangeArrowAtBar from '@/utils/ChangeArrowAtBar';
+import { onMounted, ref } from "vue";
 import TradeService from '@/services/trade.service';
 import LoginService from '@/services/login.service';
-import useTest from '@/utils/stockAllInformation';
-import useLoginUser from '@/utils/loginUser';
-import type TBidOfferInfor from "@/interfaces/TBidsOffers";
-import type TStockInformation from "@/interfaces/TStockInformation";
-import StockName from "@/components/StockName.vue"
-import StockDetail from "@/components/StockDetail.vue";
-import MarketTradePage from "@/components/MarketTrades.vue";
-import BestBidsOffres from "@/components/BestBidsOffres.vue";
-import SearchAndStockList from "@/components/SearchAndStockList.vue";
-import type TBid from "@/interfaces/TBid";
-import type TOffer from "@/interfaces/TOffer";
+import useStockAllInformation from '@/utils/stockAllInformation';
+import useLoginUser from '@/utils/LoginUser';
+import type IStockInformation from "@/interfaces/IStockInformation";
+import StockName from "@/views/trade/StockName.vue"
+import StockDetail from "@/views/trade/StockDetail.vue";
+import MarketTradePage from "@/views/trade/MarketTrades.vue";
+import BestBidsOffres from "@/views/trade/BestBidsOffres.vue";
+import SearchAndStockList from "@/views/trade/SearchAndStockList.vue";
+import type IBid from "@/interfaces/IBid";
+import type IOffer from "@/interfaces/IOffer";
+import type IBidsOffers from "@/interfaces/IBidsOffers";
 // import { io, Socket } from 'socket.io-client';
 // import { ws } from "@/socket"
 
@@ -24,37 +20,35 @@ import type TOffer from "@/interfaces/TOffer";
 
 
 const { stockInformation, stockInformationNumber, } = TradeService();
-const { userAuthen } = LoginService();
 const nowt = new Date();
 const nowte = nowt.getMinutes();
-const { getinit } = useTest();
-const { setDataAuthenUser, getUserLogin } = useLoginUser();
-const stockInf = ref<TStockInformation>();
+const { getInit } = useStockAllInformation();
+const { getUserLogin } = useLoginUser();
+let stockInf = ref<IStockInformation>();
 const marketTrade = ref<any[]>([]);
-const bidOffer = ref<TBidOfferInfor>();
+const bidOffer = ref<IBidsOffers>();
 
 
-const getinitreal = async () => {
+const getInitReal = async () => {
     await stockInformation().then((res: any) => {
         console.log("res.stockInformation  ==>", res)
         stockInf.value = res.StockInfo
+        console.log("stockInf.value ==>", stockInf.value)
         marketTrade.value = res.Lastsale
         bidOffer.value = res.BestBidOffer
+        chanageFormatBidOffer(bidOffer.value);
     }).catch((e: any) => { console.log("e==>", e) })
-    chanageFormatBidOffer(bidOffer.value);
+
     // ws()
     // setTimeout(() => {
     //     ws().disconnect()
     // }, 5000);
-
-
 };
 
 onMounted(async () => {
     await getUserLogin();
-    await getinitreal();
-    await getinit();
-
+    await getInitReal();
+    await getInit();
     const storedGraphTrade = localStorage.getItem('storedStockSymbolGraph')
     if (storedGraphTrade) {
         stockSymbolGraph.value = storedGraphTrade
@@ -65,18 +59,19 @@ onMounted(async () => {
 
 let stockSymbolGraph = ref('')
 
-const fetchStockNumber = async (stockNumber: string, StockSymbol: string) => {
-    stockSymbolGraph.value = StockSymbol
+const fetchStockNumber = async (stockNumber: string, stockSymbol: string) => {
+    stockSymbolGraph.value = stockSymbol
     if (stockNumber !== undefined) {
-        localStorage.setItem('storedStockSymbolGraph', StockSymbol)
+        localStorage.setItem('storedStockSymbolGraph', stockSymbol)
         localStorage.setItem('storedStockNumber', stockNumber)
         await stockInformationNumber(stockNumber).then((res: any) => {
-            // console.log("stockInf.value ==>", stockInf.value)
             stockInf.value = res.StockInfo
+            console.log("stockInf.value ==>", stockInf.value)
             marketTrade.value = res.Lastsale
             bidOffer.value = res.BestBidOffer
         })
         chanageFormatBidOffer(bidOffer.value);
+
     }
 }
 
@@ -87,12 +82,13 @@ const fetchStockNumber = async (stockNumber: string, StockSymbol: string) => {
 // });
 
 
-const Infooff = ref<TOffer[]>([]);
-const Infobid = ref<TBid[]>([]);
+const infoOff = ref<IOffer[]>([]);
+const infoBid = ref<IBid[]>([]);
 
 const chanageFormatBidOffer = (bidOffer: any) => {
-    const resultsOff: TOffer[] = [];
-    const resultsBid: TBid[] = [];
+    console.log("")
+    const resultsOff: IOffer[] = [];
+    const resultsBid: IBid[] = [];
     for (let i = 1; i <= 10; i++) {
 
         const OfferPriceKey = `OfferPrice${i}`
@@ -130,12 +126,12 @@ const chanageFormatBidOffer = (bidOffer: any) => {
         }
 
     }
-    Infooff.value = resultsOff.sort((a: any, b: any) => (
+    infoOff.value = resultsOff.sort((a: any, b: any) => (
         b.OfferPrice - a.OfferPrice
     ))
-    Infobid.value = resultsBid
-    // console.log('Infooff.value ==>', Infooff.value)
-    // console.log('Infobid.value ==>', Infobid.value)
+    infoBid.value = resultsBid
+    console.log('Infooff.value ==>', infoOff.value)
+    console.log('Infobid.value ==>', infoBid.value)
 };
 
 </script>
@@ -153,8 +149,8 @@ const chanageFormatBidOffer = (bidOffer: any) => {
             </div>
             <div
                 class="bg-transparent col-start-1 col-end-4 row-start-2 row-end-5 border-b border-r border-l dark:border-borderGray dark:border-opacity-25 border-opacity-25">
-                <BestBidsOffres :stockInfo="stockInf" :marketTradepages="marketTrade" :Infobids="Infobid"
-                    :Infooffs="Infooff" />
+                <BestBidsOffres :stockInfo="stockInf" :marketTradepages="marketTrade" :infoBids="infoBid"
+                    :infoOffs="infoOff" />
             </div>
             <div
                 class="bg-transparent col-start-4 col-end-10 row-start-2 row-span-3 border-b border-r border-l dark:border-borderGray dark:border-opacity-25 border-opacity-25">
@@ -195,4 +191,4 @@ const chanageFormatBidOffer = (bidOffer: any) => {
 ::-webkit-scrollbar-thumb:hover {
     background: #555555;
 }
-</style>@/utils/stockInformation@/utils/stockAllInformation
+</style>

@@ -2,7 +2,7 @@
     <div class="h-full w-ful pb-4">
         <div class="search-set p-1 w-full">
             <div class="relative w-full px-[0.75rem] py-[0.5rem]  bg-[#2a2d35] rounded-[5px]">
-                <form class="flex">
+                <div class="flex">
                     <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
                         <g fill="none" transform="translate(2 2)">
                             <path d="m18.02 9.01a9.01 9.01 0 1 1 -9.01-9.01 9.01 9.01 0 0 1 9.01 9.01z" />
@@ -19,7 +19,7 @@
                         class="w-[100%] pl-[0.5rem] m-0 outline-none text-sm font-bold placeholder-navbarIconBlack dark:text-white text-black rounded bg-[#2A2D35]"
                         v-model="searchQuery" type="text" placeholder="Search..."
                         @input="searchQuery = searchQuery.toUpperCase()" />
-                </form>
+                </div>
             </div>
         </div>
         <div class="table-nameset-last h-full border-0 mt-[-9px]">
@@ -73,7 +73,7 @@
                                             class="text-[12px] xl:text-[14px] text-left flex py-1 w-[120px] whitespace-nowrap">
                                             <svg @click="(e) => {
                                                 e.stopPropagation()
-                                                toggleStartest(item.StockNumber)
+                                                toggleStart(item.StockNumber)
                                             }" :class="fillStar(item.StockNumber)"
                                                 class="mt-0.5 w-4 mb-1 mr-3 inline-block duration-300 cursor-pointer"
                                                 height="15.892" viewBox="0 0 15.999 15.892" width="15.999"
@@ -284,7 +284,7 @@ const fillStar = (StockNumber: string) => {
 
 }
 
-const toggleStartest = (stockNumber: any) => {
+const toggleStart = (stockNumber: any) => {
 
     const data = [...stockStar.value]
     const checkStock = data.find((x) => x == stockNumber)
@@ -320,4 +320,3 @@ const findStock = computed(() => {
 });
 
 </script>
-@/utils/stockInformation@/utils/stockAllInformation

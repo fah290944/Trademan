@@ -5,7 +5,7 @@ export default function () {
 
     const {allInformation} = TradeService();
 
-    const getinit = async () => {
+    const getInit = async () => {
         await allInformation().then((res: any) => {
             setStock(res)
         }).catch((e: any) => { console.log("e==>", e) })
@@ -24,7 +24,7 @@ export default function () {
     return{
         setStock,
         getStockData,
-        getinit,
+        getInit,
     }
 
 };
