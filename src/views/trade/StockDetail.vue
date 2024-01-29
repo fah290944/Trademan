@@ -108,21 +108,21 @@
                     <div>Open Vol</div>
                     <div class="flex text-[#fff]">
                         <div class="pr-1">{{ stockInf?.OpenVolume }}</div>
-                        <div > ({{ stockInf?.OpenVolumePct }}) </div>
+                        <div v-if="stockInf?.OpenVolumePct"> ({{ stockInf?.OpenVolumePct }}) </div>
                     </div>
                 </div>
                 <div class="items-center grid grid-cols-2">
                     <div>Buy Vol</div>
                     <div class="flex">
                         <div class="pr-1 text-yellowPrev">{{ stockInf?.BuyVolume }}</div>
-                        <div class=" text-yellowPrev"> ({{ stockInf?.BuyVolumePct}}) </div>
+                        <div v-if="stockInf?.BuyVolumePct" class=" text-yellowPrev"> ({{ stockInf?.BuyVolumePct}}) </div>
                     </div>
                 </div>
                 <div class="items-center grid grid-cols-2">
                     <div>Sell Vol</div>
                     <div class="flex">
                         <div class="pr-1 text-purpleFloor">{{ stockInf?.SellVolume }}</div>
-                        <div class=" text-purpleFloor"> ({{ stockInf?.SellVolumePct}}) </div>
+                        <div v-if="stockInf?.SellVolumePct" class=" text-purpleFloor"> ({{ stockInf?.SellVolumePct}}) </div>
                     </div>
                 </div>
             </div>
