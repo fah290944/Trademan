@@ -31,9 +31,9 @@ const bidOffer = ref<IBidsOffers>();
 
 const getInitReal = async () => {
     await stockInformation().then((res: any) => {
-        console.log("res.stockInformation  ==>", res)
+        // console.log("res.stockInformation  ==>", res)
         stockInf.value = res.StockInfo
-        console.log("stockInf.value ==>", stockInf.value)
+        // console.log("stockInf.value ==>", stockInf.value)
         marketTrade.value = res.Lastsale
         bidOffer.value = res.BestBidOffer
         chanageFormatBidOffer(bidOffer.value);
@@ -66,7 +66,7 @@ const fetchStockNumber = async (stockNumber: string, stockSymbol: string) => {
         localStorage.setItem('storedStockNumber', stockNumber)
         await stockInformationNumber(stockNumber).then((res: any) => {
             stockInf.value = res.StockInfo
-            console.log("stockInf.value ==>", stockInf.value)
+            // console.log("stockInf.value ==>", stockInf.value)
             marketTrade.value = res.Lastsale
             bidOffer.value = res.BestBidOffer
         })
@@ -86,7 +86,6 @@ const infoOff = ref<IOffer[]>([]);
 const infoBid = ref<IBid[]>([]);
 
 const chanageFormatBidOffer = (bidOffer: any) => {
-    console.log("")
     const resultsOff: IOffer[] = [];
     const resultsBid: IBid[] = [];
     for (let i = 1; i <= 10; i++) {
@@ -130,8 +129,8 @@ const chanageFormatBidOffer = (bidOffer: any) => {
         b.OfferPrice - a.OfferPrice
     ))
     infoBid.value = resultsBid
-    console.log('Infooff.value ==>', infoOff.value)
-    console.log('Infobid.value ==>', infoBid.value)
+    // console.log('Infooff.value ==>', infoOff.value)
+    // console.log('Infobid.value ==>', infoBid.value)
 };
 
 </script>
